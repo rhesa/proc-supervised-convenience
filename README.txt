@@ -1,56 +1,49 @@
-Proc::Supervised::ConveUnsieerncCeo(n3t)ributed Perl DocPurmoecn:t:aStuipoenrvised::Convenience(3)
+NAME
+    Proc::Supervised::Convenience - Supervise concurrent worker processes
 
+SYNOPSIS
+    driver script:
 
+      #!/usr/bin/perl
 
-NNAAMMEE
-       Proc::Supervised::Convenience - Supervise concurrent worker processes
+      use Proc::Supervised::Convenience;
 
-SSYYNNOOPPSSIISS
-       driver script:
+      Proc::Supervised::Convenience
+        ->new_with_options( program => \&work )
+        ->supervise;
 
-         #!/usr/bin/perl
+      sub work {
+        my @args = @_;
+        # code to run forever
+      }
 
-         use Proc::Supervised::Convenience;
+    invocation:
 
-         Proc::Supervised::Convenience
-           ->new_with_options( program => \&work )
-           ->supervise;
+      ./work -d -j 10 foo bar
 
-         sub work {
-           my @args = @_;
-           # code to run forever
-         }
+FEATURES
+    *   auto-restarts worker processes
 
-       invocation:
+    *   kill -HUP to restart all workers
 
-         ./work -d -j 10 foo bar
+    *   kill -INT to stop
 
-FFEEAATTUURREESS
-       ·   auto-restarts worker processes
+    *   kill -USR1 to relaunch
 
-       ·   kill -HUP  to restart all workers
+Command-line options
+    *   --detach | -d # detach from terminal
 
-       ·   kill -INT  to stop
+    *   --processes | -j N # run N copies of &work
 
-       ·   kill -USR1 to relaunch
+    Any remaining command line arguments are passed on as is to your work
+    subroutine.
 
-CCoommmmaanndd--lliinnee ooppttiioonnss
-       ·   --detach | -d       # detach from terminal
+SEE ALSO
+    POE::Component::Supervisor.
 
-       ·   --processes | -j N  # run N copies of &work
+COPYRIGHT & LICENSE
+    Copyright 2011 Rhesa Rozendaal, all rights reserved.
 
-       Any remaining command line arguments are passed on as is to your work
-       subroutine.
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
 
-SSEEEE AALLSSOO
-       POE::Component::Supervisor.
-
-CCOOPPYYRRIIGGHHTT && LLIICCEENNSSEE
-       Copyright 2011 Rhesa Rozendaal, all rights reserved.
-
-       This program is free software; you can redistribute it and/or modify it
-       under the same terms as Perl itself.
-
-
-
-perl v5.14.1                      2011-10-25  Proc::Supervised::Convenience(3)
